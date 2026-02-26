@@ -11,20 +11,33 @@ import java.util.stream.Stream;
 public class Ejercicio1 {
     public static void main(String[] args) {
 
-        // Verificar si se han proporcionado argumentos
+        validArgs(args);
+
+        Resultado resultado = processFile(args[0]);
+
+        // Mostrar personas válidas
+        System.out.println("\n--- Personas Cargadas Correctamente ---");
+        resultado.getPersonas().forEach(System.out::println);
+
+        // Imprimir resultados
+        System.out.println("\n--- Resumen ---");
+        System.out.println("Total de personas cargadas correctamente: " + resultado.getLineasCorrectas());
+        System.out.println("Total de líneas incorrectas: " + resultado.getLineasIncorrectas());
+    }
+
+    public static void validArgs(String[] args) {
         if (args.length == 0) {
             System.out.println("No se han proporcionado argumentos.");
-            return;
+            System.exit(1);
         }
+    }
 
-        List<Person> personas = new ArrayList<>();
-        int[] lineasCorrectas = {0}; // Inicializamos los Arrays a 0
-        int[] lineasIncorrectas = {0};
+    public static Resultado processFile(String ruta) {
 
         // Abrir y leer el archivo utilizando Streams
-        try (Stream<String> lineas = Files.lines(Paths.get(args[0]))) {
+        try (Stream<String> lineas = Files.lines(Paths.get(ruta))) {
 
-            final int[] lineaNum = {0}; // Contador de líneas para el manejo de excepciones
+            int[] lineaNum = {0}; // Contador de líneas para el manejo de excepciones
 
             lineas.forEach(linea -> {
                 lineaNum[0]++;
@@ -34,7 +47,7 @@ public class Ejercicio1 {
                     personas.add(parsePerson(linea, lineaNum[0]));
                     lineasCorrectas[0]++; // Incrementamos las líneas correctas
 
-                }catch (InvalidLineFormatException e) {
+                } catch (InvalidLineFormatException e) {
 
                     // Imprimir en consola el error y la línea
                     System.err.println("Error en la línea " + e.getLineNumber() + ": " + e.getMessage());
@@ -48,15 +61,7 @@ public class Ejercicio1 {
             System.out.println("Error al leer el archivo: " + e.getMessage());
 
         }
-
-        // Mostrar personas válidas
-        System.out.println("\n--- Personas Cargadas Correctamente ---");
-        personas.forEach(System.out::println);
-
-        // Imprimir resultados
-        System.out.println("\n--- Resumen ---");
-        System.out.println("Total de personas cargadas correctamente: " + lineasCorrectas[0]);
-        System.out.println("Total de líneas incorrectas: " + lineasIncorrectas[0]);
+        return new Resultado(personas, lineasCorrectas[0], lineasIncorrectas[0]);
     }
 
     private static Person parsePerson(String linea, int lineNumber) throws InvalidLineFormatException {
