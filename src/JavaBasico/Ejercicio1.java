@@ -34,8 +34,13 @@ public class Ejercicio1 {
 
     public static Resultado processFile(String ruta) {
 
+        List<Person> personas = new ArrayList<>();
+        int[] lineasCorrectas = {0};
+        int[] lineasIncorrectas = {0};
+
         // Abrir y leer el archivo utilizando Streams
         try (Stream<String> lineas = Files.lines(Paths.get(ruta))) {
+
 
             int[] lineaNum = {0}; // Contador de líneas para el manejo de excepciones
 
