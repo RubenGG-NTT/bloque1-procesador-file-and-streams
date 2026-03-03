@@ -1,4 +1,4 @@
-package JavaBasico;
+package domain;
 
 public class Person {
     private String name;

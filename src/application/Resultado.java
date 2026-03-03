@@ -1,4 +1,6 @@
-package JavaBasico;
+package application;
+
+import domain.Person;
 
 import java.util.ArrayList;
 import java.util.List;
