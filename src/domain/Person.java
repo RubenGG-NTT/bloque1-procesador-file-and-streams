@@ -11,6 +11,18 @@ public class Person {
         this.age = age;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public String getTown() {
+        return town;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
     @Override
     public String toString() {
         return name + " - " + (town.isEmpty() ? "Sin ciudad" : town) + " - " + (age == 0 ? "Edad desconocida" : String.valueOf(age));
