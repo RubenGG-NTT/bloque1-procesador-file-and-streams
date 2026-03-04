@@ -1,4 +1,4 @@
-package JavaBasico;
+package domain;
 
 public class Person {
     private String name;
@@ -9,6 +9,18 @@ public class Person {
         this.name = name;
         this.town = town;
         this.age = age;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getTown() {
+        return town;
+    }
+
+    public int getAge() {
+        return age;
     }
 
     @Override
